@@ -42,7 +42,7 @@ const awardsAndCertificationsController = {
       offset = parseInt(offset);
       limit = parseInt(limit);
 
-      let whereClause = search ? { title: { [Op.like]: `%${search}%` } } : {};
+      let whereClause = search ? { type: { [Op.like]: `%${search}%` } } : {};
 
       const awardsData = await AwardsAndCertifications.findAll({
         where: whereClause,
