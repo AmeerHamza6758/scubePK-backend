@@ -11,13 +11,18 @@ const authController = {
   register: async (req, res) => {
     try {
       const { name, email, password, ...optionalFields } = req.body;
+      if (!email) {
+        return res
+          .status(400)
+          .json({ status: false, message: "Email is required" });
+      }
 
-      const existingUser = await User.findOne({ where: { email: email } });
+      const existingUser = await User.findOne({ where: { email } });
       if (existingUser) {
         return res.status(400).json({
           status: false,
           message: `User ${existingUser.name} already registered`,
-        });        
+        });
       }
 
       if (req.file) {
@@ -59,6 +64,11 @@ const authController = {
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
+      if (!email) {
+        return res
+          .status(400)
+          .json({ status: false, message: "Email is required" });
+      }
 
       const user = await User.findOne({ where: { email } });
       if (!user) {
@@ -166,20 +176,25 @@ const authController = {
     }
   },
 
-  getUserById:async(req,res)=>{
+  getUserById: async (req, res) => {
     try {
-      const{id}=req.params
-      const user=await User.findByPk(id)
-      if(!user){
-        return res.status(404).json({status:false,message:"User not found"})
+      const { id } = req.params;
+      const user = await User.findByPk(id);
+      if (!user) {
+        return res
+          .status(404)
+          .json({ status: false, message: "User not found" });
       }
-      res.status(200).json({status:true,data:user, message:"User successfully"});
+      res
+        .status(200)
+        .json({ status: true, data: user, message: "User successfully" });
     } catch (error) {
       console.error("Error fetching user by ID:", error.message);
-      res.status(500).json({ status: false, message: "Server error", error: error.message });
-      
+      res
+        .status(500)
+        .json({ status: false, message: "Server error", error: error.message });
     }
-  }
+  },
 };
 
 module.exports = authController;

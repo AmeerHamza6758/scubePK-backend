@@ -11,4 +11,8 @@ const faqTypes = {
   DEDICATED_TEAM: "dedicated_team",
 };
 
-module.exports = { userRoles, faqTypes };
+const types={
+  ACHIEVEMENT:'achivement',
+  CERTIFICATION:'certificate'
+}
+module.exports = { userRoles, faqTypes,types };

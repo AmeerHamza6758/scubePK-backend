@@ -1,16 +1,16 @@
-const {userRoles} = require("../helpers/constants");
+const { userRoles } = require("../helpers/constants");
 const registerModel = require("../models/auth.register.model");
-const {hash} = require("./hashPassword");
+const { hash } = require("./hashPassword");
 const seedAdmin = async () => {
   try {
     const existingAdmin = await registerModel.findOne({
-      email: "admin@gmail.com",
+      where: { email: "admin@gmail.com" },
     });
     if (existingAdmin) {
       console.log("Admin already exists");
       return;
     }
-    const hashedPassword = hash("12345678");
+    const hashedPassword =await hash("12345678");
     // Create a new admin user
     const newAdmin = new registerModel({
       name: "Super Admin",

@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db.config");
+const { types } = require("../helpers/constants");
 
 const AwardsAndCertifications = sequelize.define(
   "awards_and_certifications",
@@ -25,6 +26,10 @@ const AwardsAndCertifications = sequelize.define(
     description: {
       type: DataTypes.TEXT,
       allowNull: false,
+    },
+    type: {
+      type: DataTypes.ENUM(...Object.values(types)),
+      defaultValue: types.ACHIEVEMENT,
     },
   },
   {

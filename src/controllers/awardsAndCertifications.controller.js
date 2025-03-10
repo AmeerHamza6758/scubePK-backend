@@ -6,7 +6,7 @@ const AwardsAndCertifications = require("../models/awardsAndCertificate.model");
 const awardsAndCertificationsController = {
   create: async (req, res) => {
     try {
-      const { title, description } = req.body;
+      const { title, description, type } = req.body;
       const existingAward = await AwardsAndCertifications.findOne({ where: { title } });
 
       if (existingAward) {
@@ -22,6 +22,7 @@ const awardsAndCertificationsController = {
         title,
         description,
         image,
+        type
       });
 
       res.status(201).json({
